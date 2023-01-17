@@ -1,0 +1,25 @@
+{
+  "name": "breakout",
+  "version": "1.0.0",
+  "description": "Breakout game using pure JS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewphm/acs-1320-break-out.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrewphm/acs-1320-break-out/issues"
+  },
+  "homepage": "https://github.com/andrewphm/acs-1320-break-out#readme",
+  "devDependencies": {
+    "eslint": "^8.32.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5"
+  }
+}
