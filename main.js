@@ -1,4 +1,6 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable no-plusplus */
+
 const canvas = document.getElementById('myCanvas');
 const ctx = canvas.getContext('2d');
 
@@ -25,8 +27,6 @@ const brickOffsetLeft = 30;
 
 let score = 0;
 let lives = 3;
-
-let interval = null;
 
 const bricks = [];
 for (let c = 0; c < brickColumnCount; c++) {
@@ -94,8 +94,7 @@ function collisionDetection() {
           if (score === brickRowCount * brickColumnCount) {
             alert('YOU WIN, CONGRATULATIONS!');
             document.location.reload();
-            clearInterval(interval); // Needed for Chrome to end game
-            // requestAnimationFrame(draw);
+            requestAnimationFrame(draw);
           }
         }
       }
@@ -138,8 +137,7 @@ function draw() {
       if (!lives) {
         alert('GAME OVER');
         document.location.reload();
-        clearInterval(interval); // Needed for Chrome to end game
-        // requestAnimationFrame(draw);
+        requestAnimationFrame(draw);
       } else {
         x = canvas.width / 2;
         y = canvas.height - 30;
@@ -152,9 +150,8 @@ function draw() {
 
   x += dx;
   y += dy;
+  requestAnimationFrame(draw);
 }
-
-interval = setInterval(draw, 10);
 draw();
 
 function keyDownHandler(e) {
