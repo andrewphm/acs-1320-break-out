@@ -1,5 +1,9 @@
+/* eslint-disable import/extensions */
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-plusplus */
+
+import Brick from './Brick.js';
+import Ball from './Ball.js';
 
 const canvas = document.getElementById('myCanvas');
 const ctx = canvas.getContext('2d');
@@ -32,9 +36,11 @@ const bricks = [];
 for (let c = 0; c < brickColumnCount; c++) {
   bricks[c] = [];
   for (let r = 0; r < brickRowCount; r++) {
-    bricks[c][r] = { x: 0, y: 0, status: 1 };
+    bricks[c][r] = new Brick(0, 0);
   }
 }
+
+console.log(bricks);
 
 function drawScore() {
   ctx.font = '16px Arial';
@@ -66,13 +72,7 @@ function drawBricks() {
   }
 }
 
-function drawBall() {
-  ctx.beginPath();
-  ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
-  ctx.fillStyle = '#0095DD';
-  ctx.fill();
-  ctx.closePath();
-}
+const ball = new Ball(x, y, ballRadius, '#0095DD');
 
 function drawPaddle() {
   ctx.beginPath();
@@ -105,7 +105,8 @@ function collisionDetection() {
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawBricks();
-  drawBall();
+  ball.move(dx, dy);
+  ball.render(ctx);
   drawPaddle();
   drawScore();
   drawLives();
