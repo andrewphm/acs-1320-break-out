@@ -2,8 +2,10 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-plusplus */
 
-import Brick from './Brick.js';
-import Ball from './Ball.js';
+import Background from './background.js';
+import Brick from './brick.js';
+import Ball from './ball.js';
+import Paddle from './paddle.js';
 
 const canvas = document.getElementById('myCanvas');
 const ctx = canvas.getContext('2d');
@@ -40,8 +42,6 @@ for (let c = 0; c < brickColumnCount; c++) {
   }
 }
 
-console.log(bricks);
-
 function drawScore() {
   ctx.font = '16px Arial';
   ctx.fillStyle = '#0095DD';
@@ -62,11 +62,7 @@ function drawBricks() {
         const brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
         bricks[c][r].x = brickX;
         bricks[c][r].y = brickY;
-        ctx.beginPath();
-        ctx.rect(brickX, brickY, brickWidth, brickHeight);
-        ctx.fillStyle = '#0095DD';
-        ctx.fill();
-        ctx.closePath();
+        bricks[c][r].render(ctx);
       }
     }
   }
@@ -75,11 +71,14 @@ function drawBricks() {
 const ball = new Ball(x, y, ballRadius, '#0095DD');
 
 function drawPaddle() {
-  ctx.beginPath();
-  ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
-  ctx.fillStyle = '#0095DD';
-  ctx.fill();
-  ctx.closePath();
+  const paddle = new Paddle(
+    paddleX,
+    canvas.height - paddleHeight,
+    paddleWidth,
+    paddleHeight,
+    '#0095DD'
+  );
+  paddle.render(ctx);
 }
 
 function collisionDetection() {
@@ -102,8 +101,11 @@ function collisionDetection() {
   }
 }
 
+const background = new Background('grey', canvas.width, canvas.height);
+
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  background.render(ctx);
   drawBricks();
   ball.move(dx, dy);
   ball.render(ctx);
@@ -153,6 +155,7 @@ function draw() {
   y += dy;
   requestAnimationFrame(draw);
 }
+
 draw();
 
 function keyDownHandler(e) {
