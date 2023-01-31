@@ -6,6 +6,8 @@ import Background from './background.js';
 import Brick from './brick.js';
 import Ball from './ball.js';
 import Paddle from './paddle.js';
+import Lives from './lives.js';
+import Score from './score.js';
 
 const canvas = document.getElementById('myCanvas');
 const ctx = canvas.getContext('2d');
@@ -31,14 +33,16 @@ const brickPadding = 10;
 const brickOffsetTop = 30;
 const brickOffsetLeft = 30;
 
-let score = 0;
-let lives = 3;
+const lives = 3;
+
+const score = new Score(0);
+const classLives = new Lives(lives);
 
 const bricks = [];
 for (let c = 0; c < brickColumnCount; c++) {
   bricks[c] = [];
   for (let r = 0; r < brickRowCount; r++) {
-    bricks[c][r] = new Brick(0, 0);
+    bricks[c][r] = new Brick(ctx, 0, 0);
   }
 }
 
@@ -46,12 +50,6 @@ function drawScore() {
   ctx.font = '16px Arial';
   ctx.fillStyle = '#0095DD';
   ctx.fillText(`Score: ${score}`, 8, 20);
-}
-
-function drawLives() {
-  ctx.font = '16px Arial';
-  ctx.fillStyle = '#0095DD';
-  ctx.fillText(`Lives: ${lives}`, canvas.width - 65, 20);
 }
 
 function drawBricks() {
@@ -62,13 +60,11 @@ function drawBricks() {
         const brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
         bricks[c][r].x = brickX;
         bricks[c][r].y = brickY;
-        bricks[c][r].render(ctx);
+        bricks[c][r].render();
       }
     }
   }
 }
-
-const ball = new Ball(x, y, ballRadius, '#0095DD');
 
 function drawPaddle() {
   const paddle = new Paddle(
@@ -89,8 +85,8 @@ function collisionDetection() {
         if (x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight) {
           dy = -dy;
           b.status = 0;
-          score++;
-          if (score === brickRowCount * brickColumnCount) {
+          score.update(1);
+          if (score.score === brickRowCount * brickColumnCount) {
             alert('YOU WIN, CONGRATULATIONS!');
             document.location.reload();
             requestAnimationFrame(draw);
@@ -104,14 +100,17 @@ function collisionDetection() {
 const background = new Background('grey', canvas.width, canvas.height);
 
 function draw() {
+  const ball = new Ball(x, y, ballRadius, '#0095DD');
+
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   background.render(ctx);
   drawBricks();
-  ball.move(dx, dy);
-  ball.render(ctx);
   drawPaddle();
-  drawScore();
-  drawLives();
+  ball.render(ctx);
+  ball.move(dx, dy);
+  score.render(ctx);
+
+  classLives.render(ctx, canvas);
   collisionDetection();
 
   if (rightPressed) {
@@ -136,8 +135,8 @@ function draw() {
     if (x > paddleX && x < paddleX + paddleWidth) {
       dy = -dy;
     } else {
-      lives--;
-      if (!lives) {
+      classLives.loseLife();
+      if (!classLives.lives) {
         alert('GAME OVER');
         document.location.reload();
         requestAnimationFrame(draw);
