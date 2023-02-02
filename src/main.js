@@ -14,17 +14,18 @@ const ctx = canvas.getContext('2d');
 const brickRowCount = 3;
 const brickColumnCount = 5;
 
+const brickColors = ['red', 'green', 'purple'];
 const bricks = [];
 for (let c = 0; c < brickColumnCount; c++) {
   bricks[c] = [];
   for (let r = 0; r < brickRowCount; r++) {
-    bricks[c][r] = new Brick(ctx, 0, 0);
+    bricks[c][r] = new Brick(ctx, 0, 0, 75, 20, brickColors[r]);
   }
 }
 
 const score = new Score(0);
 const lives = new Lives(3);
-const background = new Background('grey', canvas.width, canvas.height);
+const background = new Background('black', canvas.width, canvas.height);
 const game = new Game(bricks, score, lives, ctx, canvas.width, canvas.height, background);
 game.draw();
 

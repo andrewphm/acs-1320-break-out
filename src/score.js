@@ -5,7 +5,7 @@ class Score {
 
   render(ctx) {
     ctx.font = '16px Arial';
-    ctx.fillStyle = '#0095DD';
+    ctx.fillStyle = 'red';
     ctx.fillText(`Score: ${this.score}`, 8, 20);
   }
 

@@ -11,7 +11,7 @@ class Brick extends Sprite {
   render() {
     this.ctx.beginPath();
     this.ctx.rect(this.x, this.y, this.width, this.height);
-    this.ctx.fillStyle = '#0095DD';
+    this.ctx.fillStyle = this.color;
     this.ctx.fill();
     this.ctx.closePath();
   }

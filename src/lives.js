@@ -7,7 +7,7 @@ class Lives {
   render(ctx, width) {
     ctx.beginPath();
     ctx.font = '16px Arial';
-    ctx.fillStyle = '#0095DD';
+    ctx.fillStyle = 'red';
     ctx.fillText(`Lives: ${this.lives}`, width - 65, 20);
     ctx.closePath();
   }
