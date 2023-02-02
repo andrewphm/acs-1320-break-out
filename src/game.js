@@ -37,9 +37,9 @@ class Game {
   }
 
   draw() {
-    const ball = new Ball(this.x, this.y, this.ballRadius, 'grey');
+    const ball = new Ball(this.x, this.y, this.ballRadius, 'black');
     this.ctx.clearRect(0, 0, this.width, this.height);
-    this.background.render(this.ctx);
+    // this.background.render(this.ctx);
     this.drawBricks();
     this.drawPaddle();
     ball.render(this.ctx);
@@ -110,7 +110,7 @@ class Game {
       this.height - this.paddleHeight,
       this.paddleWidth,
       this.paddleHeight,
-      'grey'
+      'black'
     );
 
     paddle.render(this.ctx);
