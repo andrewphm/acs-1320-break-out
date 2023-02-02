@@ -4,11 +4,11 @@ class Lives {
     this.defaultLives = lives;
   }
 
-  render(ctx, canvas) {
+  render(ctx, width) {
     ctx.beginPath();
     ctx.font = '16px Arial';
     ctx.fillStyle = '#0095DD';
-    ctx.fillText(`Lives: ${this.lives}`, canvas.width - 65, 20);
+    ctx.fillText(`Lives: ${this.lives}`, width - 65, 20);
     ctx.closePath();
   }
 
